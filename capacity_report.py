@@ -7,16 +7,16 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Date: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/01. Jan/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/02. Feb/" + str(yes) + "/"
 
 today = input("Enter Today's Date: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/01. Jan/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/02. Feb/" + str(today) + "/"
 
-cur_month = 'Jan'
-plan_month = 'Feb'
-plan_month_end = '28'
-plan_next_month = 'Mar'
-plan_next_month_end = '31'
+cur_month = 'Feb'
+plan_month = 'Mar'
+plan_month_end = '31'
+plan_next_month = 'Apr'
+plan_next_month_end = '30'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
@@ -112,8 +112,8 @@ result_unit[tod_second_t] = tod_unit[tod_unit_cols[3]]
 result_unit[yes_second_t] = yes_unit[yes_unit_cols[3]]
 result_unit[change_second_t] = result_unit[tod_second_t] - result_unit[yes_second_t]
 
-first_w_days = 22
-second_w_days = 25
+first_w_days = 25
+second_w_days = 22
 
 first_blank_days = first_w_days * 400
 second_blank_days = second_w_days * 400
@@ -193,20 +193,21 @@ comparison['Yesterday Qty. (' + plan_next_month + ')'] = None
 comparison['Today Qty. (' + plan_next_month + ')'] = None
 cnt = 0
 for index, row in yes_comparison.iterrows():
-    if row['Factory+Buyer'] == '-' and cnt < 6:
+    if row['Factory+Buyer'] == '-' and cnt < 7:
         comparison.loc[cnt, 'Units'] = row['Pl. Board']
         comparison.loc[cnt, 'Yesterday Qty. (' + plan_month + ')'] = row[2]
         comparison.loc[cnt, 'Yesterday Qty. (' + plan_next_month + ')'] = row[3]
         cnt += 1
 cnt = 0
 for index, row in tod_comparison.iterrows():
-    if row['Factory+Buyer'] == '-' and cnt < 6:
+    if row['Factory+Buyer'] == '-' and cnt < 7:
         comparison.loc[cnt, 'Today Qty. (' + plan_month + ')'] = row[2]
         comparison.loc[cnt, 'Today Qty. (' + plan_next_month + ')'] = row[3]
         cnt += 1
 
 comparison['Change (' + plan_month + ')'] = comparison['Today Qty. (' + plan_month + ')'] - comparison['Yesterday Qty. (' + plan_month + ')']
 comparison['Change (' + plan_next_month + ')'] = comparison['Today Qty. (' + plan_next_month + ')'] - comparison['Yesterday Qty. (' + plan_next_month + ')']
+
 
 today_date = date.today()
 outputFile = str(today_date) + '.xlsx'
@@ -506,7 +507,7 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 curr_month_plan_qt_cell = ws_unit['A12']
-curr_month_plan_qt_cell.value = 'January Plan Quantity ='
+curr_month_plan_qt_cell.value = 'February Plan Quantity ='
 curr_month_plan_qt_cell.font = Font(name='Times New Roman', bold=True)
 ws_unit.merge_cells('A12:B12')
 
@@ -525,7 +526,7 @@ ws_unit.merge_cells('A1:I1')
 ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
 wb.save(outputFile)
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/02. Feb/' + str(today_date) + '.xlsx'
 wb.save(outputFile2)
 
 print("\nSuccessfully done :)")
