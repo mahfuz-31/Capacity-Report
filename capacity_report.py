@@ -112,7 +112,7 @@ result_unit[tod_second_t] = tod_unit[tod_unit_cols[3]]
 result_unit[yes_second_t] = yes_unit[yes_unit_cols[3]]
 result_unit[change_second_t] = result_unit[tod_second_t] - result_unit[yes_second_t]
 
-first_w_days = 22
+first_w_days = 21
 second_w_days = 27
 
 first_blank_days = first_w_days * 400
