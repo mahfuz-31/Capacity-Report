@@ -112,7 +112,7 @@ result_unit[tod_second_t] = tod_unit[tod_unit_cols[3]]
 result_unit[yes_second_t] = yes_unit[yes_unit_cols[3]]
 result_unit[change_second_t] = result_unit[tod_second_t] - result_unit[yes_second_t]
 
-first_w_days = 21
+first_w_days = 20
 second_w_days = 27
 
 first_blank_days = first_w_days * 400
@@ -152,17 +152,6 @@ for index, row in provision.iterrows():
         for j in range(6):
             result_provision.loc[i, provision_col_names[j]] = row[provision_col_names[j]]
         i += 1
-
-# -------Only for Plan Day----------
-# for index, row in provision.iterrows():
-#     one = row[provision_col_names[2]]
-#     two = row[provision_col_names[3]]
-#     three = row[provision_col_names[4]]
-#     # four = row[provision_col_names[5]]
-#     if one > 0 or two > 0 or three > 0:
-#         for j in range(5):
-#             result_provision.loc[i, provision_col_names[j]] = row[provision_col_names[j]]
-#         i += 1
 
 result_provision = result_provision.drop('Unnamed: 1', axis=1)
 
