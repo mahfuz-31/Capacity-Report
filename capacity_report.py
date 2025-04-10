@@ -7,16 +7,16 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Date: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/03. Mar/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/04. Apr/" + str(yes) + "/"
 
 today = input("Enter Today's Date: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/03. Mar/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/04. Apr/" + str(today) + "/"
 
-cur_month = 'Mar'
-plan_month = 'Apr'
-plan_month_end = '30'
-plan_next_month = 'May'
-plan_next_month_end = '31'
+cur_month = 'Apr'
+plan_month = 'May'
+plan_month_end = '31'
+plan_next_month = 'Jun'
+plan_next_month_end = '30'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
@@ -112,8 +112,8 @@ result_unit[tod_second_t] = tod_unit[tod_unit_cols[3]]
 result_unit[yes_second_t] = yes_unit[yes_unit_cols[3]]
 result_unit[change_second_t] = result_unit[tod_second_t] - result_unit[yes_second_t]
 
-first_w_days = 20
-second_w_days = 27
+first_w_days = 27
+second_w_days = 20
 
 first_blank_days = first_w_days * 400
 second_blank_days = second_w_days * 400
@@ -496,7 +496,7 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 curr_month_plan_qt_cell = ws_unit['A12']
-curr_month_plan_qt_cell.value = 'March Plan Quantity ='
+curr_month_plan_qt_cell.value = 'April Plan Quantity ='
 curr_month_plan_qt_cell.font = Font(name='Times New Roman', bold=True)
 ws_unit.merge_cells('A12:B12')
 
@@ -515,7 +515,7 @@ ws_unit.merge_cells('A1:I1')
 ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
 wb.save(outputFile)
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/03. Mar/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/04. Apr/' + str(today_date) + '.xlsx'
 wb.save(outputFile2)
 
 print("\nSuccessfully done :)")
