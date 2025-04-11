@@ -216,8 +216,8 @@ ws_provision = wb['Provision']
 ws_unit_and_buyer = wb['Unit and Buyer Wise']
 ws_comparison = wb['Comparison']
 
-# define font to times new roman
-times_roman = Font(name='Times New Roman')
+# define font to Arial
+times_roman = Font(name='Arial')
 
 # change the font
 for sheet in wb.worksheets:
@@ -233,10 +233,10 @@ thin_border = Border(left=Side(style='thin', color='FFa4a4a4'),
                      bottom=Side(style='thin', color='FFa4a4a4'))
 
 # Define the bold font style
-bold_font = Font(name='Times New Roman', bold=True,)
+bold_font = Font(name='Arial', bold=True,)
 
 # Define the font with a specific color (e.g., red)
-red_font = Font(name='Times New Roman', color='FF0000', bold=True)
+red_font = Font(name='Arial', color='FF0000', bold=True)
 
 # comma
 comma = '#,##0'
@@ -365,7 +365,7 @@ for row in ws_unit.iter_rows():
 
 ws_weekly_blank_range = ws_weekly_blank['A1:J8']
 ws_unit['A15'] = 'Weekly Blank Days (Factory wise)'
-ws_unit['A15'].font = Font(bold=True)
+ws_unit['A15'].font = Font(bold=True, name='Arial', size=14)
 start_row = 16
 start_col = 1
 for row_idx, row in enumerate(ws_weekly_blank_range, start=start_row):
@@ -398,7 +398,7 @@ for row_idx, row in enumerate(ws_weekly_blank_range, start=start_row):
 
 ws_buyer_range = ws_buyer['A1:G26']
 ws_unit['B26'] = 'Buyer wise Monthly Plan qty.'
-ws_unit['B26'].font = Font(bold=True)
+ws_unit['B26'].font = Font(bold=True, name='Arial', size=14)
 start_row = 27
 start_col = 2
 for row_idx, row in enumerate(ws_buyer_range, start=start_row):
@@ -431,7 +431,7 @@ for row_idx, row in enumerate(ws_buyer_range, start=start_row):
 
 ws_provision_range = ws_provision['A1:E8']
 ws_unit['B53'] = 'Buyer wise Monthly Provision'
-ws_unit['B53'].font = Font(bold=True)
+ws_unit['B53'].font = Font(bold=True, name='Arial', size=14)
 start_row = 54
 start_col = 2
 for row_idx, row in enumerate(ws_provision_range, start=start_row):
@@ -464,7 +464,7 @@ for row_idx, row in enumerate(ws_provision_range, start=start_row):
 
 ws_unit_and_buyer_range = ws_unit_and_buyer['A1:G45']
 ws_unit['A63'] = 'Unit wise, Buyer wise Monthly Plan Qty.'
-ws_unit['A63'].font = Font(bold=True)
+ws_unit['A63'].font = Font(bold=True, name='Arial', size=14)
 start_row = 64
 start_col = 1
 for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
@@ -497,20 +497,20 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
 
 curr_month_plan_qt_cell = ws_unit['A12']
 curr_month_plan_qt_cell.value = 'April Plan Quantity ='
-curr_month_plan_qt_cell.font = Font(name='Times New Roman', bold=True)
+curr_month_plan_qt_cell.font = Font(name='Arial', bold=True)
 ws_unit.merge_cells('A12:B12')
 
 curr_month_plan_qt_value_cell = ws_unit['C12']
 curr_month_plan_qt_value_cell.value = curr_month_plan_qt
-curr_month_plan_qt_value_cell.font = Font(name='Times New Roman', bold=True)
+curr_month_plan_qt_value_cell.font = Font(name='Arial', bold=True)
 curr_month_plan_qt_value_cell.number_format = '#,##0'
 
 ws_unit.insert_rows(1)
 ws_unit['A1'] = 'Monthly Blank Days'
-ws_unit['A1'].font = Font(bold=True)
+ws_unit['A1'].font = Font(bold=True, size=14, name='Arial')
 ws_unit.insert_rows(1)
 ws_unit['A1'] = 'Capacity Report'
-ws_unit['A1'].font = Font(bold=True, size=14)
+ws_unit['A1'].font = Font(bold=True, size=20, name='Arial')
 ws_unit.merge_cells('A1:I1')
 ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
