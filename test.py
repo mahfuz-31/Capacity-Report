@@ -50,14 +50,14 @@ result[change_second_t] = 0
 yes_first = {}
 yes_second = {}
 for index, row in yes_buyer.iterrows():
-    yes_first[row['Buyer']] = 0 if math.isnan(row[1]) else row[1]
-    yes_second[row['Buyer']] = 0 if math.isnan(row[2]) else row[2]
+    yes_first[row['Buyer']] = 0 if math.isnan(row[2]) else row[2]
+    yes_second[row['Buyer']] = 0 if math.isnan(row[3]) else row[3]
 
 tod_first = {}
 tod_second = {}
 for index, row in tod_buyer.iterrows():
-    tod_first[row['Buyer']] = 0 if math.isnan(row[1]) else row[1]
-    tod_second[row['Buyer']] = 0 if math.isnan(row[2]) else row[2]
+    tod_first[row['Buyer']] = 0 if math.isnan(row[2]) else row[2]
+    tod_second[row['Buyer']] = 0 if math.isnan(row[3]) else row[3]
 
 change_first = {}
 change_second = {}
@@ -113,7 +113,7 @@ result_unit[yes_second_t] = yes_unit[yes_unit_cols[3]]
 result_unit[change_second_t] = result_unit[tod_second_t] - result_unit[yes_second_t]
 
 first_w_days = 27
-second_w_days = 19
+second_w_days = 20
 
 first_blank_days = first_w_days * 400
 second_blank_days = second_w_days * 400
