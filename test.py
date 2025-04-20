@@ -21,7 +21,7 @@ plan_next_month_end = '30'
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
 
-curr_month_plan_qt = int(input("Enter current month's plan qty: "))
+# curr_month_plan_qt = int(input("Enter current month's plan qty: "))
 
 result_buyers = []
 result = pd.DataFrame()
@@ -95,6 +95,13 @@ for index, row in result.iterrows():
         result.loc[index, tod_second_t] = tod_second[buyer] if buyer in tod_second.keys() else 0
         result.loc[index, yes_second_t] = yes_second[buyer] if buyer in yes_second.keys() else 0
         result.loc[index, change_second_t] = change_second[buyer] if buyer in change_second.keys() else 0
+
+curr_month_plan_qt = 0
+for index, row in tod_buyer.iterrows():
+    if row['Buyer'] == '-':
+        curr_month_plan_qt = row[1]
+        print(curr_month_plan_qt)
+        break
 
 yes_unit = pd.read_csv(yesLocation + "Monthly blank days.csv")
 tod_unit = pd.read_csv(todLocation + "Monthly blank days.csv")
