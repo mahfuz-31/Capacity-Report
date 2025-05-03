@@ -199,6 +199,7 @@ comparison['Change (' + plan_next_month + ')'] = comparison['Today Qty. (' + pla
 
 
 today_date = date.today()
+today_date = today_date.strftime("%d-%b-%y") # Example: 10-Mar-25
 outputFile = str(today_date) + '.xlsx'
 with pd.ExcelWriter(outputFile) as writer:
     result_unit.to_excel(writer, sheet_name='Unit Wise', index=False)
