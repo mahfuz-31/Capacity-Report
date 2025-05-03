@@ -6,17 +6,17 @@ from openpyxl.styles import Border, PatternFill, Side, Alignment # type: ignore
 from openpyxl.styles import Font # type: ignore
 
 
-yes = input("Enter Yesterday Date: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/04. Apr/" + str(yes) + "/"
+yes = input("Enter Yesterday Folder Name: ")
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/05. May/" + str(yes) + "/"
 
-today = input("Enter Today's Date: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/04. Apr/" + str(today) + "/"
+today = input("Enter Today's Folder Name: ")
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/05. May/" + str(today) + "/"
 
-cur_month = 'Apr'
-plan_month = 'May'
-plan_month_end = '31'
-plan_next_month = 'Jun'
-plan_next_month_end = '30'
+cur_month = 'May'
+plan_month = 'Jun'
+plan_month_end = '30'
+plan_next_month = 'Jul'
+plan_next_month_end = '31'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
@@ -112,26 +112,26 @@ result_unit[tod_second_t] = tod_unit[tod_unit_cols[3]]
 result_unit[yes_second_t] = yes_unit[yes_unit_cols[3]]
 result_unit[change_second_t] = result_unit[tod_second_t] - result_unit[yes_second_t]
 
-first_w_days = 27
-second_w_days = 19
+first_w_days = 19
+second_w_days = 27
 
-first_blank_days = first_w_days * 400
-second_blank_days = second_w_days * 400
+first_blank_days = first_w_days * 420
+second_blank_days = second_w_days * 420
 
-first_capacity_pctg = (result_unit.iloc[6, 2] / first_blank_days) * 100
+first_capacity_pctg = (result_unit.iloc[7, 2] / first_blank_days) * 100
 first_capacity_pctg = str(round(first_capacity_pctg, 2)) + '%'
-second_capacity_pctg = (result_unit.iloc[6, 5] / second_blank_days) * 100
+second_capacity_pctg = (result_unit.iloc[7, 5] / second_blank_days) * 100
 second_capacity_pctg = str(round(second_capacity_pctg, 2)) + '%'
 
 # Adding a new row with loc (if the index is non-numeric, use a unique label)
-result_unit.loc[7] = [None] * len(result_unit.columns)  # Add an empty row
-result_unit.iloc[7, 2] = first_capacity_pctg
-result_unit.iloc[7, 3] = first_blank_days
-result_unit.iloc[7, 4] = str(first_w_days) + ' Days'
+result_unit.loc[8] = [None] * len(result_unit.columns)  # Add an empty row
+result_unit.iloc[8, 2] = first_capacity_pctg
+result_unit.iloc[8, 3] = first_blank_days
+result_unit.iloc[8, 4] = str(first_w_days) + ' Days'
 
-result_unit.iloc[7, 5] = second_capacity_pctg
-result_unit.iloc[7, 6] = second_blank_days
-result_unit.iloc[7, 7] = str(second_w_days) + ' Days'
+result_unit.iloc[8, 5] = second_capacity_pctg
+result_unit.iloc[8, 6] = second_blank_days
+result_unit.iloc[8, 7] = str(second_w_days) + ' Days'
 
 provision = pd.read_csv(todLocation + 'Provision.csv')
 
@@ -281,7 +281,7 @@ for row in ws_unit_and_buyer.iter_rows(min_row=1, max_row=ws_unit_and_buyer.max_
 count = 0
 for row in ws_unit.iter_rows():
     for cell in row:
-        if count == 0 or count == 7 or count == 8:
+        if count == 0 or count == 8 or count == 9:
             cell.font = bold_font
             cell.fill = fill_color
         if is_number(cell) == True:
@@ -316,7 +316,7 @@ ws_comparison.column_dimensions['D'].width = 13
 
 count = 0
 for row in ws_weekly_blank.iter_rows():
-    if count == 0 or count == 7:
+    if count == 0 or count == 8:
         for cell in row:
             cell.font = bold_font
             cell.fill = fill_color
@@ -363,7 +363,7 @@ for row in ws_unit.iter_rows():
                 cell.font = red_font
 
 
-ws_weekly_blank_range = ws_weekly_blank['A1:J8']
+ws_weekly_blank_range = ws_weekly_blank['A1:J9']
 ws_unit['A15'] = 'Weekly Blank Days (Factory wise)'
 ws_unit['A15'].font = Font(bold=True, name='Arial', size=14)
 start_row = 16
@@ -397,9 +397,9 @@ for row_idx, row in enumerate(ws_weekly_blank_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_buyer_range = ws_buyer['A1:G26']
-ws_unit['B26'] = 'Buyer wise Monthly Plan qty.'
-ws_unit['B26'].font = Font(bold=True, name='Arial', size=14)
-start_row = 27
+ws_unit['B27'] = 'Buyer wise Monthly Plan qty.'
+ws_unit['B27'].font = Font(bold=True, name='Arial', size=14)
+start_row = 28
 start_col = 2
 for row_idx, row in enumerate(ws_buyer_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -430,9 +430,9 @@ for row_idx, row in enumerate(ws_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_provision_range = ws_provision['A1:E8']
-ws_unit['B53'] = 'Buyer wise Monthly Provision'
-ws_unit['B53'].font = Font(bold=True, name='Arial', size=14)
-start_row = 54
+ws_unit['B54'] = 'Buyer wise Monthly Provision'
+ws_unit['B54'].font = Font(bold=True, name='Arial', size=14)
+start_row = 55
 start_col = 2
 for row_idx, row in enumerate(ws_provision_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -463,9 +463,9 @@ for row_idx, row in enumerate(ws_provision_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_unit_and_buyer_range = ws_unit_and_buyer['A1:G45']
-ws_unit['A63'] = 'Unit wise, Buyer wise Monthly Plan Qty.'
-ws_unit['A63'].font = Font(bold=True, name='Arial', size=14)
-start_row = 64
+ws_unit['A65'] = 'Unit wise, Buyer wise Monthly Plan Qty.'
+ws_unit['A65'].font = Font(bold=True, name='Arial', size=14)
+start_row = 66
 start_col = 1
 for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -496,7 +496,7 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 curr_month_plan_qt_cell = ws_unit['A12']
-curr_month_plan_qt_cell.value = 'April Plan Quantity ='
+curr_month_plan_qt_cell.value = 'May Plan Quantity ='
 curr_month_plan_qt_cell.font = Font(name='Arial', bold=True)
 ws_unit.merge_cells('A12:B12')
 
@@ -515,7 +515,7 @@ ws_unit.merge_cells('A1:I1')
 ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
 wb.save(outputFile)
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/04. Apr/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/05. May/' + str(today_date) + '.xlsx'
 wb.save(outputFile2)
 
 print("\nSuccessfully done :)")
