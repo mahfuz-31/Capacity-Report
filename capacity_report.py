@@ -7,16 +7,16 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Folder Name: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/07. Jul/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/08. Aug/" + str(yes) + "/"
 
 today = input("Enter Today's Folder Name: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/07. Jul/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/08. Aug/" + str(today) + "/"
 
-cur_month = 'Jul'
-plan_month = 'Aug'
-plan_month_end = '31'
-plan_next_month = 'Sep'
-plan_next_month_end = '30'
+cur_month = 'Aug'
+plan_month = 'Sep'
+plan_month_end = '30'
+plan_next_month = 'Oct'
+plan_next_month_end = '31'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
@@ -497,7 +497,7 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 curr_month_plan_qt_cell = ws_unit['A12']
-curr_month_plan_qt_cell.value = 'Jul Plan Quantity ='
+curr_month_plan_qt_cell.value = cur_month + "Plan Quantity ="
 curr_month_plan_qt_cell.font = Font(name='Arial', bold=True)
 ws_unit.merge_cells('A12:B12')
 
@@ -511,12 +511,12 @@ ws_unit['A1'] = 'Monthly Blank Days'
 ws_unit['A1'].font = Font(bold=True, size=14, name='Arial')
 ws_unit.insert_rows(1)
 ws_unit['A1'] = 'Capacity Report'
-ws_unit['A1'].font = Font(bold=True, size=20, name='Arial')
+ws_unit['A1'].font = Font(bold=True, size=24, name='Playfair Display')
 ws_unit.merge_cells('A1:I1')
 ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
 wb.save(outputFile)
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/07. Jul/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/08. Aug/' + str(today_date) + '.xlsx'
 wb.save(outputFile2)
 
 print("\nSuccessfully done :)")
