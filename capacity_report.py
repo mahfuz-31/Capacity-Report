@@ -497,7 +497,7 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 curr_month_plan_qt_cell = ws_unit['A12']
-curr_month_plan_qt_cell.value = cur_month + "Plan Quantity ="
+curr_month_plan_qt_cell.value = cur_month + " Plan Quantity ="
 curr_month_plan_qt_cell.font = Font(name='Arial', bold=True)
 ws_unit.merge_cells('A12:B12')
 
