@@ -182,14 +182,14 @@ comparison['Yesterday Qty. (' + plan_next_month + ')'] = None
 comparison['Today Qty. (' + plan_next_month + ')'] = None
 cnt = 0
 for index, row in yes_comparison.iterrows():
-    if row['Factory+Buyer'] == '-' and cnt < 7:
+    if row['Factory+Buyer'] == '-' and cnt < 8:
         comparison.loc[cnt, 'Units'] = row['Pl. Board']
         comparison.loc[cnt, 'Yesterday Qty. (' + plan_month + ')'] = row[2]
         comparison.loc[cnt, 'Yesterday Qty. (' + plan_next_month + ')'] = row[3]
         cnt += 1
 cnt = 0
 for index, row in tod_comparison.iterrows():
-    if row['Factory+Buyer'] == '-' and cnt < 7:
+    if row['Factory+Buyer'] == '-' and cnt < 8:
         comparison.loc[cnt, 'Today Qty. (' + plan_month + ')'] = row[2]
         comparison.loc[cnt, 'Today Qty. (' + plan_next_month + ')'] = row[3]
         cnt += 1
