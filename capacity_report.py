@@ -7,16 +7,16 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Folder Name: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/09. Sep/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/10. Oct/" + str(yes) + "/"
 
 today = input("Enter Today's Folder Name: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/09. Sep/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/10. Oct/" + str(today) + "/"
 
-cur_month = 'Sep'
-plan_month = 'Oct'
-plan_month_end = '31'
-plan_next_month = 'Nov'
-plan_next_month_end = '30'
+cur_month = 'Oct'
+plan_month = 'Nov'
+plan_month_end = '30'
+plan_next_month = 'Dec'
+plan_next_month_end = '31'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
@@ -516,7 +516,7 @@ ws_unit.merge_cells('A1:I1')
 ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
 wb.save(outputFile)
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/09. Sep/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/10. Oct/' + str(today_date) + '.xlsx'
 wb.save(outputFile2)
 
 print("\nSuccessfully done :)")
