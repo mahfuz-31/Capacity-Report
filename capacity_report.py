@@ -339,6 +339,14 @@ for row in ws_buyer.iter_rows():
             cell.fill = fill_color
     count += 1
 
+# red mark to the negative values in buyer wise
+for row in ws_buyer.iter_rows():
+    for cell in row:
+        val = cell.value
+        if isinstance(val, (int, float)):  # Check if the value is a number
+            if val < 0:
+                cell.font = red_font
+
 count = 0
 for row in ws_provision.iter_rows():
     if count == 0 or ws_provision.max_row == count + 1:
