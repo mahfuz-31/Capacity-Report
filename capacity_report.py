@@ -439,9 +439,9 @@ for row_idx, row in enumerate(ws_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_provision_range = ws_provision['A1:E8']
-ws_unit['B54'] = 'Buyer wise Monthly Provision'
-ws_unit['B54'].font = Font(bold=True, name='Arial', size=14)
-start_row = 55
+ws_unit['B56'] = 'Buyer wise Monthly Provision'
+ws_unit['B56'].font = Font(bold=True, name='Arial', size=14)
+start_row = 57
 start_col = 2
 for row_idx, row in enumerate(ws_provision_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -472,9 +472,9 @@ for row_idx, row in enumerate(ws_provision_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_unit_and_buyer_range = ws_unit_and_buyer['A1:G70']
-ws_unit['A65'] = 'Unit wise, Buyer wise Monthly Plan Qty.'
-ws_unit['A65'].font = Font(bold=True, name='Arial', size=14)
-start_row = 66
+ws_unit['A67'] = 'Unit wise, Buyer wise Monthly Plan Qty.'
+ws_unit['A67'].font = Font(bold=True, name='Arial', size=14)
+start_row = 68
 start_col = 1
 for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
