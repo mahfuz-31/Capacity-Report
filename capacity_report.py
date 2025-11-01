@@ -7,15 +7,19 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Folder Name: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/10. Oct/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/11. Nov/" + str(yes) + "/"
 
 today = input("Enter Today's Folder Name: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/10. Oct/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/11. Nov/" + str(today) + "/"
 
-cur_month = 'Oct'
-plan_month = 'Nov'
-plan_month_end = '30'
-plan_next_month = 'Dec'
+today_date = date.today()
+today_date = today_date.strftime("%d-%b-%y") # Example: 10-Mar-25
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/11. Nov/' + str(today_date) + '.xlsx'
+
+cur_month = 'Nov'
+plan_month = 'Dec'
+plan_month_end = '31'
+plan_next_month = 'Jan'
 plan_next_month_end = '31'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
@@ -198,8 +202,6 @@ comparison['Change (' + plan_month + ')'] = comparison['Today Qty. (' + plan_mon
 comparison['Change (' + plan_next_month + ')'] = comparison['Today Qty. (' + plan_next_month + ')'] - comparison['Yesterday Qty. (' + plan_next_month + ')']
 
 
-today_date = date.today()
-today_date = today_date.strftime("%d-%b-%y") # Example: 10-Mar-25
 outputFile = str(today_date) + '.xlsx'
 with pd.ExcelWriter(outputFile) as writer:
     result_unit.to_excel(writer, sheet_name='Unit Wise', index=False)
@@ -524,7 +526,6 @@ ws_unit.merge_cells('A1:I1')
 ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
 
 wb.save(outputFile)
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/10. Oct/' + str(today_date) + '.xlsx'
 wb.save(outputFile2)
 
 print("\nSuccessfully done :)")
