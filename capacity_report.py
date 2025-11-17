@@ -119,8 +119,8 @@ result_unit[change_second_t] = result_unit[tod_second_t] - result_unit[yes_secon
 first_w_days = 26
 second_w_days = 26
 
-first_blank_days = first_w_days * 427
-second_blank_days = second_w_days * 427
+first_blank_days = first_w_days * 436
+second_blank_days = second_w_days * 436
 
 first_capacity_pctg = (result_unit.iloc[7, 2] / first_blank_days) * 100
 first_capacity_pctg = str(round(first_capacity_pctg, 2)) + '%'
