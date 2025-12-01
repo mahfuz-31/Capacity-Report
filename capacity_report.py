@@ -7,20 +7,20 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Folder Name: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/11. Nov/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/12. Dec/" + str(yes) + "/"
 
 today = input("Enter Today's Folder Name: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/11. Nov/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/12. Dec/" + str(today) + "/"
 
 today_date = date.today()
 today_date = today_date.strftime("%d-%b-%y") # Example: 10-Mar-25
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/11. Nov/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/12. Dec/' + str(today_date) + '.xlsx'
 
-cur_month = 'Nov'
-plan_month = 'Dec'
-plan_month_end = '31'
-plan_next_month = 'Jan'
-plan_next_month_end = '31'
+cur_month = 'Dec'
+plan_month = 'Jan'
+plan_month_end = '26'
+plan_next_month = 'Feb'
+plan_next_month_end = '22'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
@@ -111,10 +111,10 @@ result_unit['Factory'] = tod_unit[['Factory']]
 result_unit['-'] = tod_unit[['Unnamed: 1']]
 result_unit[tod_first_t] = tod_unit[tod_unit_cols[2]]
 result_unit[yes_first_t] = yes_unit[yes_unit_cols[2]]
-result_unit[change_first_t] = result_unit[tod_first_t] - result_unit[yes_first_t]
+result_unit[change_first_t] = result_unit[yes_first_t] - result_unit[tod_first_t]
 result_unit[tod_second_t] = tod_unit[tod_unit_cols[3]]
 result_unit[yes_second_t] = yes_unit[yes_unit_cols[3]]
-result_unit[change_second_t] = result_unit[tod_second_t] - result_unit[yes_second_t]
+result_unit[change_second_t] = result_unit[yes_second_t] - result_unit[tod_second_t]
 
 first_w_days = 26
 second_w_days = 26
@@ -247,6 +247,9 @@ comma = '#,##0'
 # title color
 fill_color = PatternFill(start_color='dce1e0', end_color='dce1e0', fill_type='solid')
 
+# change title color
+change_fill_color = PatternFill(start_color='6BC72E', end_color='6BC72E', fill_type='solid')
+
 def is_number(cell):
     return isinstance(cell.value, (int, float))
 
@@ -285,8 +288,11 @@ count = 0
 for row in ws_unit.iter_rows():
     for cell in row:
         if count == 0 or count == 8 or count == 9:
+            if count == 0 and cell.value.startswith('Change'):
+                cell.fill = change_fill_color
+            else:
+                cell.fill = fill_color
             cell.font = bold_font
-            cell.fill = fill_color
         if is_number(cell) == True:
             cell.number_format = comma
     count += 1
