@@ -7,20 +7,20 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Folder Name: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/12. Dec/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2026/02. Feb/" + str(yes) + "/"
 
 today = input("Enter Today's Folder Name: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/12. Dec/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2026/02. Feb/" + str(today) + "/"
 
 today_date = date.today()
 today_date = today_date.strftime("%d-%b-%y") # Example: 10-Mar-25
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2025/Reports/12. Dec/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2026/Reports/02. Feb/' + str(today_date) + '.xlsx'
 
-cur_month = 'Dec'
-plan_month = 'Jan'
-plan_month_end = '26'
-plan_next_month = 'Feb'
-plan_next_month_end = '22'
+cur_month = 'Feb'
+plan_month = 'Mar'
+plan_month_end = '31'
+plan_next_month = 'Apr'
+plan_next_month_end = '30'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
@@ -100,11 +100,29 @@ for index, row in result.iterrows():
         result.loc[index, yes_second_t] = yes_second[buyer] if buyer in yes_second.keys() else 0
         result.loc[index, change_second_t] = change_second[buyer] if buyer in change_second.keys() else 0
 
+# unit wise blank days
 yes_unit = pd.read_csv(yesLocation + "Monthly blank days.csv")
 tod_unit = pd.read_csv(todLocation + "Monthly blank days.csv")
 
 tod_unit_cols = tod_unit.columns
 yes_unit_cols = yes_unit.columns
+
+
+first_w_days = 22
+second_w_days = 19
+
+first_blank_days = first_w_days * 436
+second_blank_days = second_w_days * 436
+machines_list_unit = [
+    1326, 608, 1521, 1252, 1210, 2160, 792
+]
+blank_pctg_first = []
+for i in range(len(machines_list_unit)):
+    denom = (machines_list_unit[i] / 20) * first_w_days
+    blank_pctg_first.append(tod_unit[tod_unit_cols[2]][i] / denom if denom else 0)
+# print(tod_unit[tod_unit_cols[2]])
+
+print("\nFirst Month Blank Days Percentage (Factory wise):", blank_pctg_first)
 
 result_unit = pd.DataFrame()
 result_unit['Factory'] = tod_unit[['Factory']]
@@ -116,11 +134,6 @@ result_unit[tod_second_t] = tod_unit[tod_unit_cols[3]]
 result_unit[yes_second_t] = yes_unit[yes_unit_cols[3]]
 result_unit[change_second_t] = result_unit[yes_second_t] - result_unit[tod_second_t]
 
-first_w_days = 26
-second_w_days = 26
-
-first_blank_days = first_w_days * 436
-second_blank_days = second_w_days * 436
 
 first_capacity_pctg = (result_unit.iloc[7, 2] / first_blank_days) * 100
 first_capacity_pctg = str(round(first_capacity_pctg, 2)) + '%'
@@ -146,7 +159,6 @@ for i in range(len(provision_col_names)):
     result_provision[provision_col_names[i]] = None
 
 i = 0
-# comment this for loop on the plan day
 for index, row in provision.iterrows():
     one = row[provision_col_names[2]]
     two = row[provision_col_names[3]]
@@ -318,10 +330,33 @@ ws_unit.column_dimensions['E'].width = 13
 ws_unit.column_dimensions['F'].width = 13
 ws_unit.column_dimensions['G'].width = 13
 ws_unit.column_dimensions['H'].width = 13
+ws_unit.column_dimensions['M'].width = 20
+ws_unit.column_dimensions['N'].width = 13
+ws_unit.column_dimensions['O'].width = 13
+ws_unit.column_dimensions['P'].width = 13
+ws_unit.column_dimensions['Q'].width = 13
+ws_unit.column_dimensions['R'].width = 13
 
-ws_comparison.column_dimensions['B'].width = 15
-ws_comparison.column_dimensions['C'].width = 13
-ws_comparison.column_dimensions['D'].width = 13
+# ws_comparison.column_dimensions['B'].width = 15
+# ws_comparison.column_dimensions['C'].width = 13
+# ws_comparison.column_dimensions['D'].width = 13
+
+ws_unit.insert_rows(1)
+ws_unit['A1'] = 'Monthly Blank Days'
+ws_unit['A1'].font = Font(bold=True, size=14, name='Arial')
+ws_unit.insert_rows(1)
+ws_unit['A1'] = 'Capacity Report'
+ws_unit['A1'].font = Font(bold=True, size=24, name='Playfair Display')
+ws_unit.merge_cells('A1:I1')
+ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
+
+curr_month_plan_qt_cell = ws_unit['A15']
+curr_month_plan_qt_cell.value = cur_month + " Plan Quantity Balance ="
+curr_month_plan_qt_cell.font = Font(name='Arial', bold=True)
+curr_month_plan_qt_value_cell = ws_unit['C15']
+curr_month_plan_qt_value_cell.value = curr_month_plan_qt
+curr_month_plan_qt_value_cell.font = Font(name='Arial', bold=True)
+curr_month_plan_qt_value_cell.number_format = '#,##0'
 
 count = 0
 for row in ws_weekly_blank.iter_rows():
@@ -381,9 +416,9 @@ for row in ws_unit.iter_rows():
 
 
 ws_weekly_blank_range = ws_weekly_blank['A1:J9']
-ws_unit['A15'] = 'Weekly Blank Days (Factory wise)'
-ws_unit['A15'].font = Font(bold=True, name='Arial', size=14)
-start_row = 16
+ws_unit['A17'] = 'Weekly Blank Days (Factory wise)'
+ws_unit['A17'].font = Font(bold=True, name='Arial', size=14)
+start_row = 18
 start_col = 1
 for row_idx, row in enumerate(ws_weekly_blank_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -414,9 +449,9 @@ for row_idx, row in enumerate(ws_weekly_blank_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_buyer_range = ws_buyer['A1:G26']
-ws_unit['B27'] = 'Buyer wise Monthly Plan qty.'
-ws_unit['B27'].font = Font(bold=True, name='Arial', size=14)
-start_row = 28
+ws_unit['B29'] = 'Buyer wise Monthly Plan qty.'
+ws_unit['B29'].font = Font(bold=True, name='Arial', size=14)
+start_row = 30
 start_col = 2
 for row_idx, row in enumerate(ws_buyer_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -447,9 +482,9 @@ for row_idx, row in enumerate(ws_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_provision_range = ws_provision['A1:E8']
-ws_unit['B56'] = 'Buyer wise Monthly Provision'
-ws_unit['B56'].font = Font(bold=True, name='Arial', size=14)
-start_row = 57
+ws_unit['B58'] = 'Buyer wise Monthly Provision'
+ws_unit['B58'].font = Font(bold=True, name='Arial', size=14)
+start_row = 59
 start_col = 2
 for row_idx, row in enumerate(ws_provision_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -480,10 +515,10 @@ for row_idx, row in enumerate(ws_provision_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_unit_and_buyer_range = ws_unit_and_buyer['A1:G70']
-ws_unit['A67'] = 'Unit wise, Buyer wise Monthly Plan Qty.'
-ws_unit['A67'].font = Font(bold=True, name='Arial', size=14)
-start_row = 68
-start_col = 1
+ws_unit['L2'] = 'Unit wise, Buyer wise Monthly Plan Qty.'
+ws_unit['L2'].font = Font(bold=True, name='Arial', size=14)
+start_row = 3
+start_col = 12
 for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
         destination_cell = ws_unit.cell(row=row_idx, column=col_idx, value=cell.value)
@@ -512,24 +547,38 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
         if cell.number_format:
             destination_cell.number_format = cell.number_format
 
-curr_month_plan_qt_cell = ws_unit['A12']
-curr_month_plan_qt_cell.value = cur_month + " Plan Quantity ="
-curr_month_plan_qt_cell.font = Font(name='Arial', bold=True)
-ws_unit.merge_cells('A12:B12')
-
-curr_month_plan_qt_value_cell = ws_unit['C12']
-curr_month_plan_qt_value_cell.value = curr_month_plan_qt
-curr_month_plan_qt_value_cell.font = Font(name='Arial', bold=True)
-curr_month_plan_qt_value_cell.number_format = '#,##0'
-
-ws_unit.insert_rows(1)
-ws_unit['A1'] = 'Monthly Blank Days'
-ws_unit['A1'].font = Font(bold=True, size=14, name='Arial')
-ws_unit.insert_rows(1)
-ws_unit['A1'] = 'Capacity Report'
-ws_unit['A1'].font = Font(bold=True, size=24, name='Playfair Display')
-ws_unit.merge_cells('A1:I1')
-ws_unit['A1'].alignment = Alignment(horizontal='center', vertical='center')
+ws_comparison_range = ws_comparison['A1:G8']
+ws_unit['L52'] = 'Comparison'
+ws_unit['L52'].font = Font(bold=True, name='Arial', size=14)
+start_row= 53
+start_col = 12
+for row_idx, row in enumerate(ws_comparison_range, start=start_row):
+    for col_idx, cell in enumerate(row, start=start_col):
+        destination_cell = ws_unit.cell(row=row_idx, column=col_idx, value=cell.value)
+        # Copy the cell font
+        if cell.has_style:
+            destination_cell.font = Font(name=cell.font.name, 
+                                         size=cell.font.size, 
+                                         bold=cell.font.bold, 
+                                         italic=cell.font.italic, 
+                                         vertAlign=cell.font.vertAlign, 
+                                         underline=cell.font.underline, 
+                                         strike=cell.font.strike, 
+                                         color=cell.font.color)
+        # Copy the fill (cell background color)
+        if cell.fill is not None:
+            destination_cell.fill = PatternFill(fill_type=cell.fill.fill_type, 
+                                                start_color=cell.fill.start_color, 
+                                                end_color=cell.fill.end_color)
+        # Copy the border
+        if cell.border is not None:
+            destination_cell.border = Border(left=cell.border.left,
+                                                right=cell.border.right,
+                                                top=cell.border.top,
+                                                bottom=cell.border.bottom)
+        # Copy number format
+        if cell.number_format:
+            destination_cell.number_format = cell.number_format
 
 wb.save(outputFile)
 wb.save(outputFile2)
