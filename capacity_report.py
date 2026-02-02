@@ -192,26 +192,30 @@ tod_comparison = pd.read_csv(todLocation + 'Unit wise Buyer wise Plan Qty.csv')
 
 comparison = pd.DataFrame()
 comparison['Units'] = None
-comparison['Yesterday Qty. (' + plan_month + ')'] = None
-comparison['Today Qty. (' + plan_month + ')'] = None
-comparison['Yesterday Qty. (' + plan_next_month + ')'] = None
-comparison['Today Qty. (' + plan_next_month + ')'] = None
+comparison[today + '-' + cur_month + ' (' + plan_month + ')'] = None
+comparison[yes + '-' + cur_month + ' (' + plan_month + ')'] = None
+comparison['Change (' + plan_month + ')'] = None
+comparison[today + '-' + cur_month + ' (' + plan_next_month + ')'] = None
+comparison[yes + '-' + cur_month + ' (' + plan_next_month + ')'
+] = None
+comparison['Change (' + plan_next_month + ')'] = None
+
 cnt = 0
 for index, row in yes_comparison.iterrows():
     if row['Factory+Buyer'] == '-' and cnt < 8:
         comparison.loc[cnt, 'Units'] = row['Pl. Board']
-        comparison.loc[cnt, 'Yesterday Qty. (' + plan_month + ')'] = row[2]
-        comparison.loc[cnt, 'Yesterday Qty. (' + plan_next_month + ')'] = row[3]
+        comparison.loc[cnt, yes + '-' + cur_month + ' (' + plan_month + ')'] = row[2]
+        comparison.loc[cnt, yes + '-' + cur_month + ' (' + plan_next_month + ')'] = row[3]
         cnt += 1
 cnt = 0
 for index, row in tod_comparison.iterrows():
     if row['Factory+Buyer'] == '-' and cnt < 8:
-        comparison.loc[cnt, 'Today Qty. (' + plan_month + ')'] = row[2]
-        comparison.loc[cnt, 'Today Qty. (' + plan_next_month + ')'] = row[3]
+        comparison.loc[cnt, today + '-' + cur_month + ' (' + plan_month + ')'] = row[2]
+        comparison.loc[cnt, today + '-' + cur_month + ' (' + plan_next_month + ')'] = row[3]
         cnt += 1
 
-comparison['Change (' + plan_month + ')'] = comparison['Today Qty. (' + plan_month + ')'] - comparison['Yesterday Qty. (' + plan_month + ')']
-comparison['Change (' + plan_next_month + ')'] = comparison['Today Qty. (' + plan_next_month + ')'] - comparison['Yesterday Qty. (' + plan_next_month + ')']
+comparison['Change (' + plan_month + ')'] = comparison[tod_first_t] - comparison[yes_first_t]
+comparison['Change (' + plan_next_month + ')'] = comparison[tod_second_t] - comparison[yes_second_t]
 
 
 outputFile = str(today_date) + '.xlsx'
@@ -336,10 +340,6 @@ ws_unit.column_dimensions['O'].width = 13
 ws_unit.column_dimensions['P'].width = 13
 ws_unit.column_dimensions['Q'].width = 13
 ws_unit.column_dimensions['R'].width = 13
-
-# ws_comparison.column_dimensions['B'].width = 15
-# ws_comparison.column_dimensions['C'].width = 13
-# ws_comparison.column_dimensions['D'].width = 13
 
 ws_unit.insert_rows(1)
 ws_unit['A1'] = 'Monthly Blank Days'
