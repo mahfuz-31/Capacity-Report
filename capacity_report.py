@@ -192,30 +192,29 @@ tod_comparison = pd.read_csv(todLocation + 'Unit wise Buyer wise Plan Qty.csv')
 
 comparison = pd.DataFrame()
 comparison['Units'] = None
-comparison[today + '-' + cur_month + ' (' + plan_month + ')'] = None
-comparison[yes + '-' + cur_month + ' (' + plan_month + ')'] = None
-comparison['Change (' + plan_month + ')'] = None
-comparison[today + '-' + cur_month + ' (' + plan_next_month + ')'] = None
-comparison[yes + '-' + cur_month + ' (' + plan_next_month + ')'
-] = None
-comparison['Change (' + plan_next_month + ')'] = None
+comparison[tod_first_t] = None
+comparison[yes_first_t] = None
+comparison[change_first_t] = None
+comparison[tod_second_t] = None
+comparison[yes_second_t] = None
+comparison[change_second_t] = None
 
 cnt = 0
 for index, row in yes_comparison.iterrows():
     if row['Factory+Buyer'] == '-' and cnt < 8:
         comparison.loc[cnt, 'Units'] = row['Pl. Board']
-        comparison.loc[cnt, yes + '-' + cur_month + ' (' + plan_month + ')'] = row[2]
-        comparison.loc[cnt, yes + '-' + cur_month + ' (' + plan_next_month + ')'] = row[3]
+        comparison.loc[cnt, yes_first_t] = row[2]
+        comparison.loc[cnt, yes_second_t] = row[3]
         cnt += 1
 cnt = 0
 for index, row in tod_comparison.iterrows():
     if row['Factory+Buyer'] == '-' and cnt < 8:
-        comparison.loc[cnt, today + '-' + cur_month + ' (' + plan_month + ')'] = row[2]
-        comparison.loc[cnt, today + '-' + cur_month + ' (' + plan_next_month + ')'] = row[3]
+        comparison.loc[cnt, tod_first_t] = row[2]
+        comparison.loc[cnt, tod_second_t] = row[3]
         cnt += 1
 
-comparison['Change (' + plan_month + ')'] = comparison[tod_first_t] - comparison[yes_first_t]
-comparison['Change (' + plan_next_month + ')'] = comparison[tod_second_t] - comparison[yes_second_t]
+comparison[change_first_t] = comparison[tod_first_t] - comparison[yes_first_t]
+comparison[change_second_t] = comparison[tod_second_t] - comparison[yes_second_t]
 
 
 outputFile = str(today_date) + '.xlsx'
