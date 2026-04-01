@@ -7,19 +7,19 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Folder Name: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2026/02. Feb/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/04. Apr/" + str(yes) + "/"
 
 today = input("Enter Today's Folder Name: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2026/02. Feb/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/04. Apr/" + str(today) + "/"
 
 today_date = date.today()
 today_date = today_date.strftime("%d-%b-%y") # Example: 10-Mar-25
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/2026/Reports/02. Feb/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/Reports/04. Apr/' + str(today_date) + '.xlsx'
 
-cur_month = 'Feb'
-plan_month = 'Mar'
+cur_month = 'Apr'
+plan_month = 'May'
 plan_month_end = '31'
-plan_next_month = 'Apr'
+plan_next_month = 'Jun'
 plan_next_month_end = '30'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
@@ -108,8 +108,8 @@ tod_unit_cols = tod_unit.columns
 yes_unit_cols = yes_unit.columns
 
 
-first_w_days = 22
-second_w_days = 19
+first_w_days = 25
+second_w_days = 24
 
 first_blank_days = first_w_days * 436
 second_blank_days = second_w_days * 436
@@ -447,7 +447,7 @@ for row_idx, row in enumerate(ws_weekly_blank_range, start=start_row):
         if cell.number_format:
             destination_cell.number_format = cell.number_format
 
-ws_buyer_range = ws_buyer['A1:G26']
+ws_buyer_range = ws_buyer['A1:G28']
 ws_unit['B29'] = 'Buyer wise Monthly Plan qty.'
 ws_unit['B29'].font = Font(bold=True, name='Arial', size=14)
 start_row = 30
@@ -481,9 +481,9 @@ for row_idx, row in enumerate(ws_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_provision_range = ws_provision['A1:E8']
-ws_unit['B58'] = 'Buyer wise Monthly Provision'
-ws_unit['B58'].font = Font(bold=True, name='Arial', size=14)
-start_row = 59
+ws_unit['B59'] = 'Buyer wise Monthly Provision'
+ws_unit['B59'].font = Font(bold=True, name='Arial', size=14)
+start_row = 60
 start_col = 2
 for row_idx, row in enumerate(ws_provision_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -547,9 +547,9 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_comparison_range = ws_comparison['A1:G8']
-ws_unit['L52'] = 'Comparison'
-ws_unit['L52'].font = Font(bold=True, name='Arial', size=14)
-start_row= 53
+ws_unit['L56'] = 'Comparison'
+ws_unit['L56'].font = Font(bold=True, name='Arial', size=14)
+start_row= 57
 start_col = 12
 for row_idx, row in enumerate(ws_comparison_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):

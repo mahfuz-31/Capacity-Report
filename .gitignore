@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+# Unignore the specified files
+!capacity_report.py
+!template.xlsx
+!FastReact Confg..xlsx
+
+# Unignore .gitignore itself
+!.gitignore
