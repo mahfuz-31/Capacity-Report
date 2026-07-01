@@ -7,19 +7,19 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Folder Name: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/04. Apr/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/07. Jul/" + str(yes) + "/"
 
 today = input("Enter Today's Folder Name: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/04. Apr/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/07. Jul/" + str(today) + "/"
 
 today_date = date.today()
 today_date = today_date.strftime("%d-%b-%y") # Example: 10-Mar-25
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/Reports/04. Apr/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/Reports/07. Jul/' + str(today_date) + '.xlsx'
 
-cur_month = 'Apr'
-plan_month = 'May'
+cur_month = 'Jul'
+plan_month = 'Aug'
 plan_month_end = '31'
-plan_next_month = 'Jun'
+plan_next_month = 'Sep'
 plan_next_month_end = '30'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
@@ -108,8 +108,8 @@ tod_unit_cols = tod_unit.columns
 yes_unit_cols = yes_unit.columns
 
 
-first_w_days = 22
-second_w_days = 25
+first_w_days = 25
+second_w_days = 26
 
 first_blank_days = first_w_days * 436
 second_blank_days = second_w_days * 436
