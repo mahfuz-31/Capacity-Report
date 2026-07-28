@@ -447,7 +447,7 @@ for row_idx, row in enumerate(ws_weekly_blank_range, start=start_row):
         if cell.number_format:
             destination_cell.number_format = cell.number_format
 
-ws_buyer_range = ws_buyer['A1:G28']
+ws_buyer_range = ws_buyer['A1:G33']
 ws_unit['B29'] = 'Buyer wise Monthly Plan qty.'
 ws_unit['B29'].font = Font(bold=True, name='Arial', size=14)
 start_row = 30
@@ -481,9 +481,9 @@ for row_idx, row in enumerate(ws_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_provision_range = ws_provision['A1:E8']
-ws_unit['B59'] = 'Buyer wise Monthly Provision'
-ws_unit['B59'].font = Font(bold=True, name='Arial', size=14)
-start_row = 60
+ws_unit['B63'] = 'Buyer wise Monthly Provision'
+ws_unit['B63'].font = Font(bold=True, name='Arial', size=14)
+start_row = 64
 start_col = 2
 for row_idx, row in enumerate(ws_provision_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
@@ -547,9 +547,9 @@ for row_idx, row in enumerate(ws_unit_and_buyer_range, start=start_row):
             destination_cell.number_format = cell.number_format
 
 ws_comparison_range = ws_comparison['A1:G8']
-ws_unit['L56'] = 'Comparison'
-ws_unit['L56'].font = Font(bold=True, name='Arial', size=14)
-start_row= 57
+ws_unit['L62'] = 'Comparison'
+ws_unit['L62'].font = Font(bold=True, name='Arial', size=14)
+start_row= 63
 start_col = 12
 for row_idx, row in enumerate(ws_comparison_range, start=start_row):
     for col_idx, cell in enumerate(row, start=start_col):
