@@ -7,20 +7,20 @@ from openpyxl.styles import Font # type: ignore
 
 
 yes = input("Enter Yesterday Folder Name: ")
-yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/07. Jul/" + str(yes) + "/"
+yesLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/08. Aug/" + str(yes) + "/"
 
 today = input("Enter Today's Folder Name: ")
-todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/07. Jul/" + str(today) + "/"
+todLocation = "//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/08. Aug/" + str(today) + "/"
 
 today_date = date.today()
 today_date = today_date.strftime("%d-%b-%y") # Example: 10-Mar-25
-outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/Reports/07. Jul/' + str(today_date) + '.xlsx'
+outputFile2 = '//192.168.1.231/Planning Internal/Capacity planning/Capacity Report/RMG/2026/Reports/08. Aug/' + str(today_date) + '.xlsx'
 
-cur_month = 'Jul'
-plan_month = 'Aug'
-plan_month_end = '31'
-plan_next_month = 'Sep'
-plan_next_month_end = '30'
+cur_month = 'Aug'
+plan_month = 'Sep'
+plan_month_end = '30'
+plan_next_month = 'Oct'
+plan_next_month_end = '31'
 
 yes_buyer = pd.read_csv(yesLocation + "Buyer wise monthly plan qty.csv")
 tod_buyer = pd.read_csv(todLocation + "Buyer wise monthly plan qty.csv")
