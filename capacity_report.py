@@ -108,7 +108,7 @@ tod_unit_cols = tod_unit.columns
 yes_unit_cols = yes_unit.columns
 
 
-first_w_days = 25
+first_w_days = 27
 second_w_days = 26
 
 first_blank_days = first_w_days * 436
